@@ -286,6 +286,7 @@ input[type='radio'] {
   border: 1px solid var(--color-secondary);
   padding: 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .search-radio input[type='radio']:checked+label {
