@@ -1,5 +1,5 @@
 import { getTVShows } from "./api/api.js";
-import { global } from "./script.js";
+import { global, SEARCH_ROUTE, TV_SHOWS_ROUTE } from "./script.js";
 import { API_IMAGE_URL } from "./api/config.js";
 
 // TV Show Example
@@ -26,7 +26,7 @@ import { API_IMAGE_URL } from "./api/config.js";
 //     "vote_count": 12357
 // }
 
-function addShowToDom(show) {
+export function addShowToDom(show) {
   // Check show first (validation)
   if (!Number.isInteger(show.id)) return;
 
@@ -73,7 +73,14 @@ function addShowToDom(show) {
   cardDiv.appendChild(cardBodyDiv);
   console.log(cardDiv);
 
-  document.querySelector("#popular-shows").appendChild(cardDiv);
+  switch (global.route) {
+    case TV_SHOWS_ROUTE:
+      document.querySelector("#popular-shows").appendChild(cardDiv);
+      break;
+    case SEARCH_ROUTE:
+      document.querySelector('#search-results').appendChild(cardDiv);
+      break;
+  }
 }
 
 export async function loadTV() {
