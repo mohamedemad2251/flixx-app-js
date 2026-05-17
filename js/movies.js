@@ -35,7 +35,7 @@ export function addMovieToDom(movie) {
 
   // Create Image 
   const img = document.createElement('img');
-  img.src = `${API_IMAGE_URL}${movie.poster_path}` ?? "/images/no-image.jpg";
+  img.src = movie.poster_path ? `${API_IMAGE_URL}${movie.poster_path}` : "/images/no-image.jpg";
   img.classList.add('card-img-top');
   img.alt = movie.title;
 
@@ -45,7 +45,7 @@ export function addMovieToDom(movie) {
 
   // Create Heading 5 (Child of Card Body Div)
   const h5 = document.createElement('h5');
-  h5.textContent = movie.title ?? "No Title";
+  h5.textContent = movie.title ? movie.title : "No Title";
   h5.classList.add('card-title');
 
   // Create Paragraph (Child of Card Body Div)

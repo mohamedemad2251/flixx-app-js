@@ -40,7 +40,7 @@ export function addShowToDom(show) {
 
   // Create Image
   const img = document.createElement("img");
-  img.src = `${API_IMAGE_URL}${show.poster_path}` ?? "/images/no-image.jpg";
+  img.src = show.poster_path ? `${API_IMAGE_URL}${show.poster_path}` : "/images/no-image.jpg";
   img.classList.add("card-img-top");
   img.alt = show.title;
 
@@ -50,7 +50,7 @@ export function addShowToDom(show) {
 
   // Create Heading 5 (Child of Card Body Div)
   const h5 = document.createElement("h5");
-  h5.textContent = show.name ?? "No Title";
+  h5.textContent = show.name ? show.name : "No Title";
   h5.classList.add("card-title");
 
   // Create Paragraph (Child of Card Body Div)
