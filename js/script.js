@@ -1,6 +1,7 @@
 import { loadMovieDetails } from "./movie-details.js";
 import { loadMovies } from "./movies.js";
 import { loadSearch } from "./search.js";
+import { loadShowDetails } from "./show-details.js";
 import { loadTV } from "./shows.js";
 
 // CONSTANTS
@@ -61,6 +62,7 @@ const init = () => {
       break;
     // TV Show Details
     case TV_DETAILS_ROUTE:
+      loadShowDetails();
       break;
     case SEARCH_ROUTE:
       loadSearch();

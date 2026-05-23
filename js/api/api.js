@@ -12,6 +12,8 @@ export const TV_URL = `${API_BASE_URL}/tv/popular`;
 export const API_SEARCH_URL = `${API_BASE_URL}/search`;
 // 4- Movie Details (Many details to fetch)
 export const MOVIE_DETAILS_URL = `${API_BASE_URL}/movie`;
+// 5- Show Details (Many details to fetch)
+export const TV_DETAILS_URL = `${API_BASE_URL}/tv`;
 
 const fetchAPI = async (query) => {
   const options = {
@@ -80,6 +82,18 @@ export const search = async (searchType, query) => {
 export const getMovieDetails = async (movieId) => {
   changeSpinner('show');
   const data = await fetchAPI(MOVIE_DETAILS_URL + `/${movieId}`);
+  if (typeof (data) === typeof (Error)) {
+    return data;
+  }
+  else {
+    changeSpinner('hide');
+    return data;
+  }
+};
+
+export const getShowDetails = async (showId) => {
+  changeSpinner('show');
+  const data = await fetchAPI(TV_DETAILS_URL + `/${showId}`);
   if (typeof (data) === typeof (Error)) {
     return data;
   }
