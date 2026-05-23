@@ -10,10 +10,10 @@ export const MOVIES_URL = `${API_BASE_URL}/movie/popular`;
 export const TV_URL = `${API_BASE_URL}/tv/popular`;
 // 3- Search (Regardless whether it's Movie or TV)
 export const API_SEARCH_URL = `${API_BASE_URL}/search`;
+// 4- Movie Details (Many details to fetch)
+export const MOVIE_DETAILS_URL = `${API_BASE_URL}/movie`;
 
-
-// Returns a PROMISE (async) to then use and get data/error
-export const getMovies = async () => {
+const fetchAPI = async (query) => {
   const options = {
     method: "GET",
     headers: {
@@ -23,64 +23,68 @@ export const getMovies = async () => {
   };
 
   try {
-    changeSpinner('show');
-    const getMoviesResponse = await fetch(MOVIES_URL, options);
-    const data = await getMoviesResponse.json();
-    if (!getMoviesResponse.ok) {
-      throw new Error("Error fetching movies.");
+
+    const response = await fetch(query, options);
+    if (!response.ok) {
+      throw new Error(`Error fetching query: ${query}`);
     }
+    const data = await response.json();
+    return data;
+  }
+  catch (error) {
+    return error;
+  }
+
+};
+
+// Returns a PROMISE (async) to then use and get data/error
+export const getMovies = async () => {
+  changeSpinner('show');
+  const data = await fetchAPI(MOVIES_URL);
+  if (typeof (data) === typeof (Error)) {
+    return data;
+  }
+  else {
     changeSpinner('hide');
     return data;
-  } catch (error) {
-    changeSpinner('hide');
-    return error;
   }
 };
 
 export const getTVShows = async () => {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${global.publicKey}`,
-    },
-  };
-
-  try {
-    const getTVShowsResponse = await fetch(TV_URL, options);
-    if (!getTVShowsResponse.ok) {
-      throw new Error("Error fetching shows.");
-    }
-    const data = await getTVShowsResponse.json();
+  changeSpinner('show');
+  const data = await fetchAPI(TV_URL);
+  if (typeof (data) === typeof (Error)) {
     return data;
-  } catch (error) {
-    return error;
+  }
+  else {
+    changeSpinner('hide');
+    return data;
   }
 };
 
 export const search = async (searchType, query) => {
   if (searchType !== SEARCH_MOVIE && searchType !== SEARCH_TV) return;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${global.publicKey}`,
-    },
-  };
 
-  try {
-    changeSpinner('show');
-    const searchResponse = await fetch(API_SEARCH_URL + `/${searchType}?query=${query}`, options);
-    if (!searchResponse.ok) {
-      throw new Error("Error Searching");
-    }
-    const data = await searchResponse.json();
+  changeSpinner('show');
+  const data = await fetchAPI(API_SEARCH_URL + `/${searchType}?query=${query}`);
+  if (typeof (data) === typeof (Error)) {
+    return data;
+  }
+  else {
     changeSpinner('hide');
     return data;
   }
-  catch (error) {
-    changeSpinner('hide');
-    return error;
-  }
 
+};
+
+export const getMovieDetails = async (movieId) => {
+  changeSpinner('show');
+  const data = await fetchAPI(MOVIE_DETAILS_URL + `/${movieId}`);
+  if (typeof (data) === typeof (Error)) {
+    return data;
+  }
+  else {
+    changeSpinner('hide');
+    return data;
+  }
 };

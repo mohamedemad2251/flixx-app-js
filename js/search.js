@@ -2,6 +2,7 @@ import { global } from "./script.js";
 import { search } from "./api/api.js";
 import { addMovieToDom } from "./movies.js";
 import { addShowToDom } from "./shows.js";
+import { parseParams } from "./utils/parseParams.js";
 
 const ERROR_MSG = "Please enter a search keyword";
 
@@ -31,14 +32,6 @@ function addErrorToDom() {
 
 }
 
-
-// Parse the query (i.e. url after ?)
-function parseParams() {
-    const params = new URLSearchParams(global.searchParams);
-    const searchParams = Object.fromEntries(params);
-
-    return searchParams;
-}
 
 export async function loadSearch() {
     const searchParams = parseParams();

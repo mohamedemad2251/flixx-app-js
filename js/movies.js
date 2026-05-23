@@ -1,6 +1,6 @@
 import { global, HOME_HTML_ROUTE, HOME_ROOT_ROUTE, SEARCH_ROUTE } from "./script.js";
 import { getMovies, MOVIES_URL } from "./api/api.js";
-import { API_IMAGE_URL } from "./api/config.js";
+import { API_IMAGE_URL_W500 } from "./api/config.js";
 
 
 // Target card:
@@ -35,7 +35,7 @@ export function addMovieToDom(movie) {
 
   // Create Image 
   const img = document.createElement('img');
-  img.src = movie.poster_path ? `${API_IMAGE_URL}${movie.poster_path}` : "/images/no-image.jpg";
+  img.src = movie.poster_path ? `${API_IMAGE_URL_W500}${movie.poster_path}` : "/images/no-image.jpg";
   img.classList.add('card-img-top');
   img.alt = movie.title;
 

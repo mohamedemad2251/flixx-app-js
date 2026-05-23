@@ -1,6 +1,6 @@
 import { getTVShows } from "./api/api.js";
 import { global, SEARCH_ROUTE, TV_SHOWS_ROUTE } from "./script.js";
-import { API_IMAGE_URL } from "./api/config.js";
+import { API_IMAGE_URL_W500 } from "./api/config.js";
 
 // TV Show Example
 // {
@@ -40,7 +40,7 @@ export function addShowToDom(show) {
 
   // Create Image
   const img = document.createElement("img");
-  img.src = show.poster_path ? `${API_IMAGE_URL}${show.poster_path}` : "/images/no-image.jpg";
+  img.src = show.poster_path ? `${API_IMAGE_URL_W500}${show.poster_path}` : "/images/no-image.jpg";
   img.classList.add("card-img-top");
   img.alt = show.title;
 
