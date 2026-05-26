@@ -67,7 +67,6 @@ export function addMovieToDom(movie) {
 
   cardDiv.appendChild(a);
   cardDiv.appendChild(cardBodyDiv);
-  console.log(cardDiv);
 
   switch (global.route) {
     case HOME_HTML_ROUTE:

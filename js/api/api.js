@@ -64,11 +64,11 @@ export const getTVShows = async () => {
   }
 };
 
-export const search = async (searchType, query) => {
+export const search = async (searchType, query, page = 1) => {
   if (searchType !== SEARCH_MOVIE && searchType !== SEARCH_TV) return;
 
   changeSpinner('show');
-  const data = await fetchAPI(API_SEARCH_URL + `/${searchType}?query=${query}`);
+  const data = await fetchAPI(API_SEARCH_URL + `/${searchType}?query=${query}&page=${page}`);
   if (typeof (data) === typeof (Error)) {
     return data;
   }

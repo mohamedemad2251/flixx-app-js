@@ -32,11 +32,43 @@ function addErrorToDom() {
 
 }
 
+function paginate(page, total_pages) {
+    const pageCounterElement = document.querySelector('.page-counter');
+    pageCounterElement.textContent = `Page ${page > 0 && page <= total_pages ? page : 1} of ${total_pages > 0 ? total_pages : 1}`;
+
+    const prevButtonElement = document.querySelector('#prev');
+    const nextButtonElement = document.querySelector('#next');
+
+    const setURLPage = (newPage) => {
+        const url = new URL(global.fullPath);
+        url.searchParams.set('page', newPage);
+        return url.href;
+    };
+
+
+    if (page > 1) {
+        // window.location.assign() routes to the specified URL (remember that setURLPage() returns URL.href)
+        prevButtonElement.onclick = () => window.location.assign(setURLPage(page - 1));
+
+    }
+    else {
+        prevButtonElement.setAttribute('disabled', "");
+    }
+    if (page < total_pages) {
+        nextButtonElement.onclick = () => window.location.assign(setURLPage(page + 1));
+    }
+    else {
+        nextButtonElement.setAttribute('disabled', '');
+    }
+}
+
 
 export async function loadSearch() {
     const searchParams = parseParams();
     const type = searchParams.type;
     const searchQuery = searchParams['search-term'].trim();
+    const page = searchParams['page'];
+
 
     if (!type) return;
 
@@ -46,12 +78,10 @@ export async function loadSearch() {
         return;
     }
 
-    console.log("Searched! searchQuery = ", searchQuery);
 
-    const data = await search(type, searchQuery);
+    const data = await search(type, searchQuery, page);
     if (data.results) {
         const results = data.results;
-        console.log(results);
         switch (type) {
             case SEARCH_MOVIE:
                 results.forEach((result) => {
@@ -64,6 +94,9 @@ export async function loadSearch() {
                 });
                 break;
         }
+
+        // Add pagination
+        paginate(data.page, data.total_pages);
     }
 
     // Add the search value to the input field (better UI/UX)
@@ -76,4 +109,5 @@ export async function loadSearch() {
             radioElement.setAttribute('checked', "");
         }
     });
+
 }

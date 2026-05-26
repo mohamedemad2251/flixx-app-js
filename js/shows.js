@@ -71,7 +71,6 @@ export function addShowToDom(show) {
 
   cardDiv.appendChild(a);
   cardDiv.appendChild(cardBodyDiv);
-  console.log(cardDiv);
 
   switch (global.route) {
     case TV_SHOWS_ROUTE:
